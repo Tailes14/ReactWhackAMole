@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 function Headers({score, bestScore, setBestScore, time}) {
@@ -44,20 +44,25 @@ function GameMechanics({setScore, setTime, time}) {
 function App() {
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
-  const [time, setTime] = useState(60);
+  const [time, setTime] = useState(5);
+  const [toggleStart, setToggleStart] = useState(false)
 
-  const handleStart = (() => {
-    //setTime(60)
-    let gameClock = setInterval(() => {
-      setTime(time-1);
-    }, 1000)
+  useEffect(() => {
+    if (toggleStart === true) {
+      let gameClock = setTimeout(() => {
+        setTime(time-1);
+      }, 1000)
+      if (time === 0) {
+        clearInterval(gameClock)
+      }
+    }
   })
 
   return (
     <div className="App">
       <Headers score={score} bestScore={bestScore} setBestScore={setBestScore} time={time}/>
       <PlayGrid/>
-      <input id="startGame" type="button" value="Start Game" onClick={handleStart}/>
+      <input id="startGame" type="button" value="Start Game" onClick={() => setToggleStart(true)}/>
       <ScoreTable/>
 
     </div>
