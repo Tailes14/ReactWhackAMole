@@ -34,13 +34,23 @@ function ScoreTable({}) {
   </>
 }
 
+function GameMechanics({setScore, setTime, time}) {
+  let gameTime = time
+  for (let i= 0; i < gameTime; i++) {
+    setTime(time-1)
+  }
+}
+
 function App() {
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
-  const [time, setTime] = useState(0);
+  const [time, setTime] = useState(60);
 
   const handleStart = (() => {
-    setTime(60)
+    //setTime(60)
+    let gameClock = setInterval(() => {
+      setTime(time-1);
+    }, 1000)
   })
 
   return (
