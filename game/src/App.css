@@ -36,3 +36,37 @@
     transform: rotate(360deg);
   }
 }
+
+/* Copied  */
+.headers {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+#remainingTime {
+  color:red;
+}
+
+.square {
+  border-style: solid;
+  border-color:black;
+  height: 200px;
+  width: 200px;
+}
+
+.playGrid {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-content: center;
+  width: 800px;
+  height: 800px;
+}
+
+
+.mole {
+  /* Allows for mole image to be personalized */
+  background-image: url(files/grady.png);
+  background-size: cover;
+}
