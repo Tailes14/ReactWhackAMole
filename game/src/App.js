@@ -13,18 +13,21 @@ function Headers({score, bestScore, setBestScore, time}) {
 }
 
 function PlayGrid( {molePoisiton}) {
- 
+  let assignMole = [
+    false, false, false, false, false, false, false, false, false
+  ]
+  assignMole[molePoisiton] = true
   return <>
   <div className="playGrid">
-    <div className="square" id="1"></div>
-    <div className="square" id="2"></div>
-    <div className="square" id="3"></div>
-    <div className="square" id="4"></div>
-    <div className="square" id="5"></div>
-    <div className="square" id="6"></div>
-    <div className="square" id="7"></div>
-    <div className="square" id="8"></div>
-    <div className="square" id="9"></div>
+    <div className={assignMole[0] ? 'square mole' : 'square'} id="1"></div>
+    <div className={assignMole[1] ? 'square mole' : 'square'} id="2"></div>
+    <div className={assignMole[2] ? 'square mole' : 'square'} id="3"></div>
+    <div className={assignMole[3] ? 'square mole' : 'square'} id="4"></div>
+    <div className={assignMole[4] ? 'square mole' : 'square'} id="5"></div>
+    <div className={assignMole[5] ? 'square mole' : 'square'} id="6"></div>
+    <div className={assignMole[6] ? 'square mole' : 'square'} id="7"></div>
+    <div className={assignMole[7] ? 'square mole' : 'square'} id="8"></div>
+    <div className={assignMole[8] ? 'square mole' : 'square'} id="9"></div>
   </div>
   </>
 }
