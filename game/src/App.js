@@ -12,15 +12,18 @@ function Headers({score, bestScore, setBestScore, time}) {
   </>
 }
 
-function PlayGrid( {molePoisiton}) {
+
+function PlayGrid( {molePoisiton, setScore}) {
   let assignMole = [
     false, false, false, false, false, false, false, false, false
   ]
+
+
   assignMole[molePoisiton] = true
   return <>
   <div className="playGrid">
     <div className={assignMole[0] ? 'square mole' : 'square'} id="1"></div>
-    <div className={assignMole[1] ? 'square mole' : 'square'} id="2"></div>
+    <div className={assignMole[1] ? 'square mole' : 'square'} id="2" ></div>
     <div className={assignMole[2] ? 'square mole' : 'square'} id="3"></div>
     <div className={assignMole[3] ? 'square mole' : 'square'} id="4"></div>
     <div className={assignMole[4] ? 'square mole' : 'square'} id="5"></div>
@@ -41,28 +44,60 @@ function ScoreTable({}) {
 function App() {
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
-  const [time, setTime] = useState(5);
+  const [time, setTime] = useState(10);
   const [toggleStart, setToggleStart] = useState(false)
   const [molePoisiton, setMolePoisiton] = useState(0)
+  const [id, setId] = useState(null)
 
+  const square = document.querySelectorAll('.square')
 
+  square.forEach((clickID) => {
+    clickID.addEventListener('mouseup', () => {
+      console.log(clickID.id)
+      console.log(molePoisiton+1)
+      if (Number(clickID.id )=== Number(molePoisiton+1)) {
+        setScore(score+1)
+      }
+    })
+  })
 
   useEffect(() => {
-    if (toggleStart === true) {
-      let gameClock = setTimeout(() => {
-        setTime(time-1);
-        setMolePoisiton(Math.floor(Math.random() * 9))
-      }, 1000)
-      if (time === 0) {
+    let gameClock
+    if (toggleStart) {
+      /*
+      if (gameClock) {
         clearInterval(gameClock)
       }
+      */
+     if (id) return;
+      gameClock = setInterval(() => {
+        setTime(time => time-1);
+        setMolePoisiton(Math.floor(Math.random() * 9))
+      }, 1000)
+      setId(gameClock)
+      console.log(gameClock)
+      //setToggleStart(false)
+    } else {
+      setId(null)
+      clearInterval(id)
     }
-  })
+    /*
+    console.log(Number(time), 0)
+    if (Number(time) === 0) {
+      console.log("entered")
+      clearInterval(gameClock)
+      console.log(gameClock)
+      setToggleStart(false)
+      //console.log(toggleStart)
+      
+    }
+    */
+  }, [toggleStart, time, id])
 
   return (
     <div className="App">
       <Headers score={score} bestScore={bestScore} setBestScore={setBestScore} time={time}/>
-      <PlayGrid molePoisiton={molePoisiton}/>
+      <PlayGrid molePoisiton={molePoisiton} setScore={setScore}/>
       <input id="startGame" type="button" value="Start Game" onClick={() => setToggleStart(true)}/>
       <ScoreTable/>
     </div>
